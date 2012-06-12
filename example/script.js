@@ -1,7 +1,12 @@
+// Create a container element
 var container = ism.svg("svg");
-container.setAttribute("width", 800)
-container.setAttribute("height", 600)
+
+// Add the container to the document
 document.documentElement.appendChild(container);
-map = ism.map({"container" : container});
-//layer = ism.Image("blue-marble.jpg");
-//map.add(layer);
+
+// Create a map with the container
+var map = ism.map({"container" : container});
+
+// Create a layer and add it to the map
+var layer = ism.image({"url" : "blue-marble.jpg"});
+map.add(layer);

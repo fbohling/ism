@@ -1,6 +1,7 @@
 JS_FILES = \
 		src/start.js \
 		src/svg.js \
+		src/image.js \
 		src/map.js
 
 all: ism.js
