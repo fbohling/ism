@@ -41,9 +41,10 @@ var ism = {};
     ism.map = function (spec) {
         var map = {},
             container = spec.container,
-            zoomLevel = 0;
+            zoom = 0;
 
-        container.setAttribute("viewbox", "0 0" + " " +
+        //TODO: Make a private viewBox function
+        container.setAttribute("viewBox", "0 0" + " " +
             container.getClientRects()[0].width + " " +
             container.getClientRects()[0].height);
 
@@ -54,6 +55,18 @@ var ism = {};
 
         map.container = function () {
             return container;
+        };
+
+        map.zoom = function (level) {
+            if (typeof(level) !== "number") {
+                return zoom;
+            }
+            zoom = level;
+            var magnification = Math.pow(2, zoom);
+            container.setAttribute("viewBox", "0 0" + " " +
+            container.getClientRects()[0].width * (1/magnification) + " " +
+            container.getClientRects()[0].height  * (1/magnification));
+            return map;
         };
 
         return map;
