@@ -1,6 +1,9 @@
 // Create a container element
 var container = ism.svg("svg");
 
+//container.setAttribute("width", 256);
+//container.setAttribute("height", 256);
+
 // Add the container to the document
 document.documentElement.appendChild(container);
 

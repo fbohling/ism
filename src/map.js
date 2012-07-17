@@ -5,18 +5,26 @@
         var map = {},
             container = spec.container,
             zoom = 0,
-            viewBox = function (nBox) {
-                container.setAttributeNS(null, "viewBox",
-                    nBox.x + " " + nBox.y + " " +
-                    nBox.width + " " + nBox.height);
+            viewBox = function (newVB) {
+                if (!newVB) {
+                    var contVB = container.getAttribute("viewBox")
+                            .split(" ").map(parseFloat);
+                    return {
+                        "x" : contVB[0],
+                        "y" : contVB[1],
+                        "width" : contVB[2],
+                        "height" : contVB[3]
+                    };
+                } else {
+                    container.setAttributeNS(null, "viewBox",
+                    newVB.x + " " + newVB.y + " " +
+                    newVB.width + " " + newVB.height);
+                }
             },
-            cr = function () {
+            clientRect = function () {
                 return container.getClientRects()[0];
             };
 
-        map.resize = function () {
-            viewBox({x : 0, y : 0, width : cr().width, height : cr().height});
-        };
 
         map.add = function (object) {
             object.map(map);
@@ -27,17 +35,42 @@
             return container;
         };
 
+        map.center = function (coordinates) {
+            if (!coordinates) {
+                return {
+                    "x" : (viewBox().x + viewBox().width / 2),
+                    "y" : -(viewBox().y + viewBox().height / 2)
+                };
+            } else {
+                viewBox({
+                    x : coordinates.x - viewBox().width / 2,
+                    y : -coordinates.y - viewBox().height / 2,
+                    width : viewBox().width,
+                    height : viewBox().height
+                });
+            }
+        };
+
+        map.resize = function () {
+            viewBox({x : 0, y : 0, width : clientRect().width, height : clientRect().height});
+        };
+
         map.zoom = function (level) {
             var mag = Math.pow(2, level);
             if (typeof(level) !== "number") {
                 return zoom;
             }
             zoom = level;
-            viewBox({x : 0, y : 0, width : cr().width * (1 / mag),
-                height : cr().height * (1 / mag)});
+            viewBox({
+                x : 0, 
+                y : 0,
+                width : clientRect().width * (1 / mag),
+                height : clientRect().height * (1 / mag)
+            });
             return map;
         };
 
+        // resize map after creation
         map.resize();
 
         return map;
