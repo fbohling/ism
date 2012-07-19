@@ -91,7 +91,7 @@ var ism = {};
         };
 
         map.resize = function () {
-            viewBox({x : 0, y : 0, width : clientRect().width, height : clientRect().height});
+            viewBox({"x" : 0, "y" : 0, "width" : clientRect().width, "height" : clientRect().height});
         };
 
         map.zoom = function (level) {
@@ -103,7 +103,7 @@ var ism = {};
                 height = clientRect().height * (1 / mag);
             zoom = level;
             viewBox({
-                "x" : map.center().x - width / 2, 
+                "x" : map.center().x - width / 2,
                 "y" : -map.center().y - height / 2,
                 "width" : width,
                 "height" : height
@@ -111,8 +111,9 @@ var ism = {};
             return map;
         };
 
-        // resize map after creation
+        // resize map after creation and center it at 0,0
         map.resize();
+        map.center({"x" : 0, "y" : 0});
 
         return map;
     };
