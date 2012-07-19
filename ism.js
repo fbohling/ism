@@ -82,10 +82,10 @@ var ism = {};
                 };
             } else {
                 viewBox({
-                    x : coordinates.x - viewBox().width / 2,
-                    y : -coordinates.y - viewBox().height / 2,
-                    width : viewBox().width,
-                    height : viewBox().height
+                    "x" : coordinates.x - viewBox().width / 2,
+                    "y" : -coordinates.y - viewBox().height / 2,
+                    "width" : viewBox().width,
+                    "height" : viewBox().height
                 });
             }
         };
@@ -95,16 +95,18 @@ var ism = {};
         };
 
         map.zoom = function (level) {
-            var mag = Math.pow(2, level);
             if (typeof(level) !== "number") {
                 return zoom;
             }
+            var mag = Math.pow(2, level),
+                width = clientRect().width * (1 / mag),
+                height = clientRect().height * (1 / mag);
             zoom = level;
             viewBox({
-                x : 0, 
-                y : 0,
-                width : clientRect().width * (1 / mag),
-                height : clientRect().height * (1 / mag)
+                "x" : map.center().x - width / 2, 
+                "y" : -map.center().y - height / 2,
+                "width" : width,
+                "height" : height
             });
             return map;
         };
