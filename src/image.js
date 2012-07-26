@@ -29,7 +29,7 @@
             if (arguments.length === 0) {
                 return map;
             }
-            m.container().appendChild(element);
+            m.layers().appendChild(element);
             map = m;
             return image;
         };

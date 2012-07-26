@@ -4,27 +4,22 @@
     ism.map = function (spec) {
         var map = {},
             container = spec.container,
+            width = spec.width,
+            height = spec.height,
+            angle = 0,
+            x = 0,
+            y = 0,
             zoom = 0,
-            viewBox = function (newVB) {
-                if (!newVB) {
-                    var contVB = container.getAttribute("viewBox")
-                            .split(" ").map(parseFloat);
-                    return {
-                        "x" : contVB[0],
-                        "y" : contVB[1],
-                        "width" : contVB[2],
-                        "height" : contVB[3]
-                    };
-                } else {
-                    container.setAttributeNS(null, "viewBox",
-                    newVB.x + " " + newVB.y + " " +
-                    newVB.width + " " + newVB.height);
-                }
+            apply = function () {
+                var mag = Math.pow(2, zoom),
+                    t = "scale(" + (mag) + ") " +
+                        "rotate(" + (angle) + ") " +
+                        "translate(" + (-x) +
+                        " " + y + ")";
+                layers.setAttribute("transform", t);
             },
-            clientRect = function () {
-                return container.getClientRects()[0];
-            };
-
+            layers,
+            v;
 
         map.add = function (object) {
             object.map(map);
@@ -35,46 +30,41 @@
             return container;
         };
 
+        map.layers = function () {
+            return layers;
+        };
+
         map.center = function (coordinates) {
             if (!coordinates) {
                 return {
-                    "x" : (viewBox().x + viewBox().width / 2),
-                    "y" : -(viewBox().y + viewBox().height / 2)
+                    "x" : x,
+                    "y" : y
                 };
             } else {
-                viewBox({
-                    "x" : coordinates.x - viewBox().width / 2,
-                    "y" : -coordinates.y - viewBox().height / 2,
-                    "width" : viewBox().width,
-                    "height" : viewBox().height
-                });
+                x = coordinates.x;
+                y = coordinates.y;
+                apply();
+                return map;
             }
-        };
-
-        map.resize = function () {
-            viewBox({"x" : 0, "y" : 0, "width" : clientRect().width, "height" : clientRect().height});
         };
 
         map.zoom = function (level) {
             if (typeof(level) !== "number") {
                 return zoom;
             }
-            var mag = Math.pow(2, level),
-                width = clientRect().width * (1 / mag),
-                height = clientRect().height * (1 / mag);
             zoom = level;
-            viewBox({
-                "x" : map.center().x - width / 2,
-                "y" : -map.center().y - height / 2,
-                "width" : width,
-                "height" : height
-            });
+            apply();
             return map;
         };
 
-        // resize map after creation and center it at 0,0
-        map.resize();
-        map.center({"x" : 0, "y" : 0});
+        // Initialize
+        container.setAttribute("width", width);
+        container.setAttribute("height", height);
+        v = (-width / 2) + " " + (-height / 2) + " " + width + " " + height;
+        container.setAttribute("viewBox", v);
+        layers = ism.svg("g");
+        container.appendChild(layers);
+        apply();
 
         return map;
     };
