@@ -20,6 +20,9 @@ var ism = {};
 
         element.setAttribute("width", width);
         element.setAttribute("height", height);
+        // Center around 0,0
+        element.setAttribute("x", -(width / 2));
+        element.setAttribute("y", -(height / 2));
         element.setAttributeNS("http://www.w3.org/1999/xlink",
             "href", url);
 
