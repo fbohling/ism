@@ -100,9 +100,11 @@ var ism = {};
             x = 0,
             y = 0,
             zoom = 0,
+            mag = function () {
+                return Math.pow(2, zoom);
+            },
             apply = function () {
-                var mag = Math.pow(2, zoom),
-                    t = "scale(" + (mag) + ") " +
+                var t = "scale(" + (mag()) + ") " +
                         "rotate(" + (angle) + ") " +
                         "translate(" + (-x) +
                         " " + y + ")";
@@ -138,11 +140,24 @@ var ism = {};
             }
         };
 
+        map.panBy = function (delta) {
+            map.center({
+                "x" : map.center().x - (delta.x / mag()),
+                "y" : map.center().y + (delta.y / mag())
+            });
+        }
+
         map.zoom = function (level) {
             if (typeof(level) !== "number") {
                 return zoom;
             }
             zoom = level;
+            apply();
+            return map;
+        };
+
+        map.zoomBy = function (delta) {
+            zoom += delta;
             apply();
             return map;
         };

@@ -24,15 +24,8 @@ map.add(ism.image({"url" : "blue-marble.jpg"}));
 
 // TODO: Controls
 // Add a mousewheel control (Not implemented yet)
-wheel = ism.wheel(function (delta) {
-    map.zoom(map.zoom() + delta)
-});
+wheel = ism.wheel(map.zoomBy);
 
-drag = ism.drag(function (delta) {
-    map.center({
-        "x" : map.center().x - delta.x,
-        "y" : map.center().y + delta.y
-    });
-})
+drag = ism.drag(map.panBy);
 
 // TODO: Indicators
