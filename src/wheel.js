@@ -2,7 +2,7 @@
     "use strict";
 
     /**
-     * A wheel control binds itself to the document element. 
+     * A wheel control binds itself to the document element.
      * When the mouswheel is scrolled, it will call the function
      * defined in the onChange parameter.
      *

@@ -28,4 +28,11 @@ wheel = ism.wheel(function (delta) {
     map.zoom(map.zoom() + delta)
 });
 
+drag = ism.drag(function (delta) {
+    map.center({
+        "x" : map.center().x - delta.x,
+        "y" : map.center().y + delta.y
+    });
+})
+
 // TODO: Indicators

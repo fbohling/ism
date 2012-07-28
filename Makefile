@@ -1,4 +1,5 @@
 JS_FILES = \
+		src/drag.js \
 		src/image.js \
 		src/map.js \
 		src/svg.js \
