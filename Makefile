@@ -1,7 +1,8 @@
 JS_FILES = \
 		src/image.js \
 		src/map.js \
-		src/svg.js
+		src/svg.js \
+		src/wheel.js
 
 all: ism.js
 
