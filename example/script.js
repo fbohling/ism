@@ -22,10 +22,10 @@ map.add(ism.image({"url" : "blue-marble.jpg"}));
 // As before we provide specs to the image layer constructor as an object
 // literal, which in this case holds the image's url.
 
-// TODO: Controls
-// Add a mousewheel control (Not implemented yet)
-wheel = ism.wheel(map.zoomBy);
+// Add a mousewheel control
+wheel = ism.wheel(map.container(), map.zoomBy);
 
-drag = ism.drag(map.panBy);
+// Add a drag control
+drag = ism.drag(map.container(), map.panBy);
 
 // TODO: Indicators

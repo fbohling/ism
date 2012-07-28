@@ -2,18 +2,19 @@
     "use strict";
 
     /**
-     * A wheel control binds itself to the document element.
-     * When the mouswheel is scrolled, it will call the function
-     * defined in the onChange parameter.
+     * A wheel control observes a given element.
+     * When the mouswheel is scrolled on it, a function
+     * defined in the onChange parameter will be called with an integer
+     * holding the wheel delta.
      *
      * @param onChange - function to call when mousewheel is moved
      */
-    ism.wheel = function (onChange) {
+    ism.wheel = function (element, onChange) {
         var wheel = {};
         // for w3c
-        document.addEventListener("mousewheel", wheel, false);
+        element.addEventListener("mousewheel", wheel, false);
         // for Firefox
-        document.addEventListener("DOMMouseScroll", wheel, false);
+        element.addEventListener("DOMMouseScroll", wheel, false);
 
         /**
          * Handles all events, that are fired on wheel

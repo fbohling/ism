@@ -3,20 +3,21 @@ var ism = {};
     "use strict";
 
     /**
-     * drag is a control that is bound to the document element. When
+     * drag is a control that observes a given element. When
      * the element is dragged, i.e. the left mouse button is pressed and hold
      * while the mouse is moved, it will call a function and hand over an
-     * object holding information, how much the element was draged.
+     * object holding information, on how much the element was draged.
      *
+     * @param element - An element to observe
      * @param onDrag - A function to call when a vertical drags
      *            discovered. It will be called with an object of the
      *            following form: {"x": horizontal distance,
      *                             "y": vertical distance}
      */
-    ism.drag = function (onDrag) {
+    ism.drag = function (element, onDrag) {
         var drag = {},
             lastEvt = null;
-        window.addEventListener("mousedown", drag, false);
+        element.addEventListener("mousedown", drag, false);
         // subscribe to all mouse up events to prevent a "sticky" pointer
         window.addEventListener("mouseup", drag, false);
 
@@ -36,10 +37,10 @@ var ism = {};
                 evt.preventDefault();
                 lastEvt = evt;
                 window.addEventListener("mousemove", drag, false);
-                //window.setAttributeNS(null, "cursor", "move");
+                element.setAttribute("cursor", "move");
             } else if (evt.type === "mouseup") {
                 window.removeEventListener("mousemove", drag, false);
-                //window.setAttributeNS(null, "cursor", "default");
+                element.setAttribute("cursor", "default");
             }
         };
         return drag;
@@ -145,7 +146,7 @@ var ism = {};
                 "x" : map.center().x - (delta.x / mag()),
                 "y" : map.center().y + (delta.y / mag())
             });
-        }
+        };
 
         map.zoom = function (level) {
             if (typeof(level) !== "number") {
@@ -197,18 +198,19 @@ var ism = {};
     "use strict";
 
     /**
-     * A wheel control binds itself to the document element.
-     * When the mouswheel is scrolled, it will call the function
-     * defined in the onChange parameter.
+     * A wheel control observes a given element.
+     * When the mouswheel is scrolled on it, a function
+     * defined in the onChange parameter will be called with an integer
+     * holding the wheel delta.
      *
      * @param onChange - function to call when mousewheel is moved
      */
-    ism.wheel = function (onChange) {
+    ism.wheel = function (element, onChange) {
         var wheel = {};
         // for w3c
-        document.addEventListener("mousewheel", wheel, false);
+        element.addEventListener("mousewheel", wheel, false);
         // for Firefox
-        document.addEventListener("DOMMouseScroll", wheel, false);
+        element.addEventListener("DOMMouseScroll", wheel, false);
 
         /**
          * Handles all events, that are fired on wheel

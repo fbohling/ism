@@ -55,7 +55,7 @@
                 "x" : map.center().x - (delta.x / mag()),
                 "y" : map.center().y + (delta.y / mag())
             });
-        }
+        };
 
         map.zoom = function (level) {
             if (typeof(level) !== "number") {
