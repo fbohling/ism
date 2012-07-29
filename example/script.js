@@ -29,3 +29,5 @@ wheel = ism.wheel(map.container(), map.zoomBy);
 drag = ism.drag(map.container(), map.panBy);
 
 // TODO: Indicators
+
+map.add(ism.vector({"url" : "pin.svg"}));
