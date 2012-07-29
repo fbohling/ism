@@ -2,18 +2,6 @@ var ism = {};
 (function (ism) {
     "use strict";
 
-    /**
-     * drag is a control that observes a given element. When
-     * the element is dragged, i.e. the left mouse button is pressed and hold
-     * while the mouse is moved, it will call a function and hand over an
-     * object holding information, on how much the element was draged.
-     *
-     * @param element - An element to observe
-     * @param onDrag - A function to call when a vertical drags
-     *            discovered. It will be called with an object of the
-     *            following form: {"x": horizontal distance,
-     *                             "y": vertical distance}
-     */
     ism.drag = function (element, onDrag) {
         var drag = {},
             lastEvt = null;
@@ -21,10 +9,6 @@ var ism = {};
         // subscribe to all mouse up events to prevent a "sticky" pointer
         window.addEventListener("mouseup", drag, false);
 
-        /**
-         * Handles all events fired on drag
-         * @param evt - event object
-         */
         drag.handleEvent = function (evt) {
             if (evt.type === "mousemove") {
                 evt.preventDefault();
@@ -51,14 +35,6 @@ var ism = {};
 (function (ism) {
     "use strict";
 
-    /*
-     * A map item that contains a plain image. The image can be any format
-     * that is supported by the browser, e.g. PNG, JPEG, GIF
-     *
-     * @constructor
-     * @class - A simple layer consisting of a plain image
-     * @param url - The URL of the raster image
-     */
     ism.image = function (spec) {
         var image = {},
             width = spec.width || 256,
@@ -180,14 +156,6 @@ var ism = {};
 (function (ism) {
     "use strict";
 
-    /*
-     * ism.element provides a shortcut to the otherwise verbose creation
-     * of SVGElements. Example: ism.element("rect") will create an
-     * SVGRect element.
-     *
-     * @param {String} tag
-     * @returns {SVGElement}
-     */
     ism.svg = function (tag) {
         return document.createElementNS("http://www.w3.org/2000/svg", tag);
     };
@@ -197,14 +165,6 @@ var ism = {};
 (function (ism) {
     "use strict";
 
-    /**
-     * A wheel control observes a given element.
-     * When the mouswheel is scrolled on it, a function
-     * defined in the onChange parameter will be called with an integer
-     * holding the wheel delta.
-     *
-     * @param onChange - function to call when mousewheel is moved
-     */
     ism.wheel = function (element, onChange) {
         var wheel = {};
         // for w3c
@@ -212,10 +172,6 @@ var ism = {};
         // for Firefox
         element.addEventListener("DOMMouseScroll", wheel, false);
 
-        /**
-         * Handles all events, that are fired on wheel
-         * @param evt - event object
-         */
         wheel.handleEvent = function (evt) {
             if (evt.type === "mousewheel" || evt.type === "DOMMouseScroll") {
                 evt.preventDefault();

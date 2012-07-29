@@ -1,14 +1,6 @@
 (function (ism) {
     "use strict";
 
-    /*
-     * A map item that contains a plain image. The image can be any format
-     * that is supported by the browser, e.g. PNG, JPEG, GIF
-     *
-     * @constructor
-     * @class - A simple layer consisting of a plain image
-     * @param url - The URL of the raster image
-     */
     ism.image = function (spec) {
         var image = {},
             width = spec.width || 256,
