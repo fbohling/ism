@@ -10,6 +10,7 @@
             x = 0,
             y = 0,
             zoom = 0,
+            zoomRange = [0, 10],
             mag = function () {
                 return Math.pow(2, zoom);
             },
@@ -61,13 +62,17 @@
             if (typeof(level) !== "number") {
                 return zoom;
             }
+            //Keep level inside the zoomRange
+            level = level < zoomRange[0] ? zoomRange[0] : level;
+            level = level > zoomRange[1] ? zoomRange[1] : level;
+
             zoom = level;
             apply();
             return map;
         };
 
         map.zoomBy = function (delta) {
-            zoom += delta;
+            map.zoom(map.zoom() + delta);
             apply();
             return map;
         };
