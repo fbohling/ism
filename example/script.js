@@ -30,4 +30,4 @@ drag = ism.drag(map.container(), map.panBy);
 
 // TODO: Indicators
 
-map.add(ism.vector({"url" : "pin.svg"}));
+map.add(ism.vector({"url" : "pin.svg", "width": 16, "height": 27}));

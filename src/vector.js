@@ -5,11 +5,14 @@
         var width = spec.width || 256,
             height = spec.height || 256,
             url = spec.url,
+            x = spec.x || -(width / 2),
+            // negate spec.y to make the y axis point up
+            y = -spec.y || -(height / 2),
             element = ism.svg("svg"),
             vector = {},
             onComplete = function (responseElement) {
-                responseElement.setAttribute("x", -(width / 2));
-                responseElement.setAttribute("y", -(height / 2));
+                responseElement.setAttribute("x", x);
+                responseElement.setAttribute("y", y);
                 responseElement.setAttribute("width", width);
                 responseElement.setAttribute("height", height);
                 element.parentNode.replaceChild(responseElement, element);
