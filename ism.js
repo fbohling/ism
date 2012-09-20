@@ -73,11 +73,11 @@ var ism = {};
             container = spec.container,
             width = spec.width,
             height = spec.height,
+            zoomRange = spec.zoomRange || [0, 10],
             angle = 0,
             x = 0,
             y = 0,
             zoom = 0,
-            zoomRange = [0, 10],
             mag = function () {
                 return Math.pow(2, zoom);
             },
@@ -88,8 +88,7 @@ var ism = {};
                         " " + y + ")";
                 layers.setAttribute("transform", t);
             },
-            layers,
-            v;
+            layers;
 
         map.add = function (object) {
             object.map(map);
@@ -147,8 +146,8 @@ var ism = {};
         // Initialize
         container.setAttribute("width", width);
         container.setAttribute("height", height);
-        v = (-width / 2) + " " + (-height / 2) + " " + width + " " + height;
-        container.setAttribute("viewBox", v);
+        container.setAttribute("viewBox",
+            (-width / 2) + " " + (-height / 2) + " " + width + " " + height);
         layers = ism.svg("g");
         container.appendChild(layers);
         apply();
