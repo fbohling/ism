@@ -12,9 +12,6 @@
             if (evt.type === "mousewheel" || evt.type === "DOMMouseScroll") {
                 evt.preventDefault();
                 var delta = 0;
-                if (!evt) {
-                    evt = window.event;
-                }
 
                 // Normalize the delta
                 if (evt.wheelDelta) {
@@ -23,7 +20,11 @@
                     delta = -evt.detail / 3;
                 }
 
-                onChange(delta);
+                // Return delta and mouse position
+                onChange(delta, {
+                    "x": evt.pageX - element.getScreenCTM().e,
+                    "y": evt.pageY - element.getScreenCTM().f
+                });
             }
         };
 

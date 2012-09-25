@@ -140,9 +140,19 @@ var ism = {};
             return map;
         };
 
-        map.zoomBy = function (delta) {
-            map.zoom(map.zoom() + delta);
-            apply();
+        map.zoomBy = function (delta, point) {
+            var z = zoom,
+                panDist;
+            map.zoom(zoom + delta);
+            // Pan around point, if defined
+            if (typeof(point) === "object") {
+                // Recalculate delta, in case map.zoom hit a constraint
+                delta = zoom - z;
+                panDist = function (a) {
+                    return -(a * (Math.pow(2, delta) - 1));
+                };
+                map.panBy({"x": panDist(point.x), "y": panDist(point.y)});
+            }
             return map;
         };
 
@@ -238,9 +248,6 @@ var ism = {};
             if (evt.type === "mousewheel" || evt.type === "DOMMouseScroll") {
                 evt.preventDefault();
                 var delta = 0;
-                if (!evt) {
-                    evt = window.event;
-                }
 
                 // Normalize the delta
                 if (evt.wheelDelta) {
@@ -249,7 +256,11 @@ var ism = {};
                     delta = -evt.detail / 3;
                 }
 
-                onChange(delta);
+                // Return delta and mouse position
+                onChange(delta, {
+                    "x": evt.pageX - element.getScreenCTM().e,
+                    "y": evt.pageY - element.getScreenCTM().f
+                });
             }
         };
 
