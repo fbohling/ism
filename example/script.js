@@ -22,12 +22,21 @@ map.add(ism.image({"url" : "blue-marble.jpg"}));
 // As before we provide specs to the image layer constructor as an object
 // literal, which in this case holds the image's url.
 
-// Add a mousewheel control
+// Add a push pin as a vector layer. Additionally we provide the pin's
+// width and height
+map.add(ism.vector({"url" : "pin.svg", "width": 16, "height": 27}));
+
+// So far, we can only display data because ism is non-interactive by default.
+// To make the map interactive we have to add some controls.
+
+// To add a mouse wheel control, call the ism.wheel constructor and hand the
+// element to observe and a function to call when the mouse wheel was turned.
+// From now on, every mouse wheel turn will zoom the map.
 wheel = ism.wheel(map.container(), map.zoomBy);
 
-// Add a drag control
+// In the same manner, we create a mouse drag listener to pan the map.
 drag = ism.drag(map.container(), map.panBy);
 
-// TODO: Indicators
-
-map.add(ism.vector({"url" : "pin.svg", "width": 16, "height": 27}));
+// Of course you can also manipulate the map programatically. To rotate the
+// map, call map.angle with the desired angle in degrees.
+map.angle(60);

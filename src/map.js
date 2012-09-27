@@ -28,6 +28,15 @@
             return map;
         };
 
+        map.angle = function (deg) {
+            if (typeof(deg) !== "number") {
+                return angle;
+            } else {
+                angle = deg;
+                apply();
+            }
+        };
+
         map.container = function () {
             return container;
         };
@@ -51,9 +60,22 @@
         };
 
         map.panBy = function (delta) {
+            // Get the inversed transformation matrix of the layer element
+            // to transform between the layers and screen coordinate systems.
+            var p = container.createSVGPoint(),
+                m = layers.getCTM().inverse();
+            // Set translation to 0
+            m.e = 0;
+            m.f = 0;
+            // Set up p
+            p.x = delta.x;
+            p.y = delta.y;
+            // transform p with m
+            p = p.matrixTransform(m);
+            // Recenter map
             map.center({
-                "x" : map.center().x - (delta.x / mag()),
-                "y" : map.center().y + (delta.y / mag())
+                "x" : map.center().x - (p.x),
+                "y" : map.center().y + (p.y)
             });
         };
 
