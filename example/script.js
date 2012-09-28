@@ -1,9 +1,9 @@
-// To create a map instance, we have to call the `ism.map` constructor. 
+// To create a map instance, we have to call the `ism.map` constructor.
 // As all constructors of ism are in fact object factories, we don't have to
 // write `new` each time we call a constructor:
 var map = ism.map({
-    "container" : ism.svg("svg"), 
-    "width" : 800, 
+    "container" : ism.svg("svg"),
+    "width" : 800,
     "height": 450
 });
 // ism.map takes an JavaScript object as a parameter, that contains specs
@@ -32,10 +32,10 @@ map.add(ism.vector({"url" : "pin.svg", "width": 16, "height": 27}));
 // To add a mouse wheel control, call the ism.wheel constructor and hand the
 // element to observe and a function to call when the mouse wheel was turned.
 // From now on, every mouse wheel turn will zoom the map.
-wheel = ism.wheel(map.container(), map.zoomBy);
+var wheel = ism.wheel(map.container(), map.zoomBy);
 
 // In the same manner, we create a mouse drag listener to pan the map.
-drag = ism.drag(map.container(), map.panBy);
+var drag = ism.drag(map.container(), map.panBy);
 
 // Of course you can also manipulate the map programatically. To rotate the
 // map, call map.angle with the desired angle in degrees.
