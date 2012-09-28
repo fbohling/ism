@@ -132,14 +132,11 @@ var ism = {};
         map.panBy = function (delta) {
             // Get the inversed transformation matrix of the layer element
             // to transform between the layers and screen coordinate systems.
-            var p = container.createSVGPoint(),
+            var p = ism.point(delta),
                 m = layers.getCTM().inverse();
             // Set translation to 0
             m.e = 0;
             m.f = 0;
-            // Set up p
-            p.x = delta.x;
-            p.y = delta.y;
             // transform p with m
             p = p.matrixTransform(m);
             // Recenter map
@@ -197,6 +194,13 @@ var ism = {};
 
     ism.svg = function (tag) {
         return document.createElementNS("http://www.w3.org/2000/svg", tag);
+    };
+
+    ism.point = function (coordinates) {
+        var p = ism.svg("svg").createSVGPoint();
+        p.x = coordinates.x;
+        p.y = coordinates.y;
+        return p;
     };
 
     return ism;

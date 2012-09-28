@@ -62,14 +62,11 @@
         map.panBy = function (delta) {
             // Get the inversed transformation matrix of the layer element
             // to transform between the layers and screen coordinate systems.
-            var p = container.createSVGPoint(),
+            var p = ism.point(delta),
                 m = layers.getCTM().inverse();
             // Set translation to 0
             m.e = 0;
             m.f = 0;
-            // Set up p
-            p.x = delta.x;
-            p.y = delta.y;
             // transform p with m
             p = p.matrixTransform(m);
             // Recenter map
