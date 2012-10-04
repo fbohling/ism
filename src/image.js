@@ -6,17 +6,16 @@
             width = spec.width || 256,
             height = spec.height || 256,
             url = spec.url,
-            x = spec.x || -(width / 2),
+            x = spec.x || 0,
             // negate spec.y to make the y axis point up
-            y = -spec.y || -(height / 2),
+            y = -spec.y || 0,
             element = ism.svg("image"),
             map;
 
         element.setAttribute("width", width);
         element.setAttribute("height", height);
-        // Center around 0,0
-        element.setAttribute("x", x);
-        element.setAttribute("y", y);
+        element.setAttribute("x", x - (width / 2));
+        element.setAttribute("y", y - (height / 2));
         element.setAttributeNS("http://www.w3.org/1999/xlink",
             "href", url);
 
