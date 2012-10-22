@@ -39,10 +39,11 @@ var ism = {};
         var image = {},
             width = spec.width || 256,
             height = spec.height || 256,
-            url = spec.url,
             x = spec.x || 0,
             // negate spec.y to make the y axis point up
             y = -spec.y || 0,
+            url = spec.url,
+            clazz = spec.class || "",
             element = ism.svg("image"),
             map;
 
@@ -50,6 +51,7 @@ var ism = {};
         element.setAttribute("height", height);
         element.setAttribute("x", x - (width / 2));
         element.setAttribute("y", y - (height / 2));
+        element.setAttribute("class", clazz);
         element.setAttributeNS("http://www.w3.org/1999/xlink",
             "href", url);
 
@@ -210,10 +212,11 @@ var ism = {};
     ism.vector = function (spec) {
         var width = spec.width || 256,
             height = spec.height || 256,
-            url = spec.url,
             x = spec.x || 0,
             // negate spec.y to make the y axis point up
             y = -spec.y || 0,
+            url = spec.url,
+            clazz = spec.class || "",
             element = ism.svg("svg"),
             vector = {},
             onComplete = function (responseElement) {
@@ -221,6 +224,7 @@ var ism = {};
                 responseElement.setAttribute("y", y - (height / 2));
                 responseElement.setAttribute("width", width);
                 responseElement.setAttribute("height", height);
+                responseElement.setAttribute("class", clazz);
                 element.parentNode.replaceChild(responseElement, element);
             },
             callback,

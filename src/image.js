@@ -5,10 +5,11 @@
         var image = {},
             width = spec.width || 256,
             height = spec.height || 256,
-            url = spec.url,
             x = spec.x || 0,
             // negate spec.y to make the y axis point up
             y = -spec.y || 0,
+            url = spec.url,
+            clazz = spec.class || "",
             element = ism.svg("image"),
             map;
 
@@ -16,6 +17,7 @@
         element.setAttribute("height", height);
         element.setAttribute("x", x - (width / 2));
         element.setAttribute("y", y - (height / 2));
+        element.setAttribute("class", clazz);
         element.setAttributeNS("http://www.w3.org/1999/xlink",
             "href", url);
 

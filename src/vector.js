@@ -4,10 +4,11 @@
     ism.vector = function (spec) {
         var width = spec.width || 256,
             height = spec.height || 256,
-            url = spec.url,
             x = spec.x || 0,
             // negate spec.y to make the y axis point up
             y = -spec.y || 0,
+            url = spec.url,
+            clazz = spec.class || "",
             element = ism.svg("svg"),
             vector = {},
             onComplete = function (responseElement) {
@@ -15,6 +16,7 @@
                 responseElement.setAttribute("y", y - (height / 2));
                 responseElement.setAttribute("width", width);
                 responseElement.setAttribute("height", height);
+                responseElement.setAttribute("class", clazz);
                 element.parentNode.replaceChild(responseElement, element);
             },
             callback,
