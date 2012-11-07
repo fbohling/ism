@@ -2,6 +2,7 @@ JS_FILES = \
 		src/drag.js \
 		src/image.js \
 		src/map.js \
+		src/tiled.js \
 		src/util.js \
 		src/vector.js \
 		src/wheel.js
