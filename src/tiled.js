@@ -15,27 +15,27 @@
                 var divs = Math.pow(2, zoom),
                     line = "",
                     size = width,
+                    r,
                     x,
                     y;
 
                 // delete old tiles
                 tiles.map(function (t) {
                         t.parentNode.removeChild(t);
-                });
+                    });
                 tiles = [];
 
                 // draw
                 for (y = 0; y < divs; y += 1) {
-                        var r;
-                        for (x = 0; x < divs; x += 1) {
-                            r = ism.svg("rect");
-                            r.setAttribute("x", x * size / divs);
-                            r.setAttribute("y", y * size / divs);
-                            r.setAttribute("width", (size - 1) / divs);
-                            r.setAttribute("height", (size - 1) / divs);
-                            element.appendChild(r);
-                            tiles.push(r);
-                        }
+                    for (x = 0; x < divs; x += 1) {
+                        r = ism.svg("rect");
+                        r.setAttribute("x", x * size / divs);
+                        r.setAttribute("y", y * size / divs);
+                        r.setAttribute("width", (size - 1) / divs);
+                        r.setAttribute("height", (size - 1) / divs);
+                        element.appendChild(r);
+                        tiles.push(r);
+                    }
                 }
             },
             map,
@@ -63,7 +63,7 @@
             if (z !== zoom) {
                 zoom = z;
                 draw();
-            };
+            }
             return tiled;
         };
 
