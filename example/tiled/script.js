@@ -13,6 +13,6 @@ var t = ism.tiled({})
 map.add(t);
 
 // Add mouse controls
-var wheel = ism.wheel(map.container(), function(x,p) { map.zoomBy(x,p); t.event(); });
+var wheel = ism.wheel(map.container(), map.zoomBy);
 var drag = ism.drag(map.container(), map.panBy);
 

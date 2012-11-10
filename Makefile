@@ -1,5 +1,6 @@
 JS_FILES = \
 		src/drag.js \
+		src/event.js \
 		src/image.js \
 		src/map.js \
 		src/tiled.js \

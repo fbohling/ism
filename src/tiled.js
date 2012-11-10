@@ -53,12 +53,12 @@
             }
             m.layers().appendChild(element);
             map = m;
-            zoom = Math.floor(map.zoom());
-            draw();
+            map.on("zoom", tiled.update);
+            tiled.update();
             return tiled;
         };
 
-        tiled.event = function () {
+        tiled.update = function () {
             var z = Math.round(map.zoom());
             if (z !== zoom) {
                 zoom = z;

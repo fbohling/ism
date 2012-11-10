@@ -23,6 +23,9 @@
             },
             layers;
 
+        // add event handling methods
+        ism.event(map);
+
         map.add = function (object) {
             object.map(map);
             return map;
@@ -85,6 +88,7 @@
             level = level > zoomRange[1] ? zoomRange[1] : level;
 
             zoom = level;
+            map.trigger("zoom");
             apply();
             return map;
         };

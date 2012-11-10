@@ -35,6 +35,43 @@ var ism = {};
 (function (ism) {
     "use strict";
 
+    ism.event = function (that) {
+        var types = {};
+
+        that.on = function (type, handler) {
+            if (types.hasOwnProperty(type)) {
+                types[type].push(handler);
+            } else {
+                types[type] = [handler];
+            }
+        };
+
+        that.off = function (type, handler) {
+            if (types.hasOwnProperty(type)) {
+                // Create new type array without given handler
+                types[type] = types[type].filter(function (x) {
+                    return (x === handler ? false : true);
+                });
+            }
+        };
+
+        that.trigger = function (type) {
+            if (types.hasOwnProperty(type)) {
+                // fire all functions in types[type]
+                types[type].map(function (x) {
+                    x();
+                });
+            }
+        };
+
+        that.types = types;
+    };
+
+    return ism;
+}(ism));
+(function (ism) {
+    "use strict";
+
     ism.image = function (spec) {
         var image = {},
             width = spec.width || 256,
@@ -93,6 +130,9 @@ var ism = {};
                 layers.setAttribute("transform", t);
             },
             layers;
+
+        // add event handling methods
+        ism.event(map);
 
         map.add = function (object) {
             object.map(map);
@@ -156,6 +196,7 @@ var ism = {};
             level = level > zoomRange[1] ? zoomRange[1] : level;
 
             zoom = level;
+            map.trigger("zoom");
             apply();
             return map;
         };
@@ -245,12 +286,12 @@ var ism = {};
             }
             m.layers().appendChild(element);
             map = m;
-            zoom = Math.floor(map.zoom());
-            draw();
+            map.on("zoom", tiled.update);
+            tiled.update();
             return tiled;
         };
 
-        tiled.event = function () {
+        tiled.update = function () {
             var z = Math.round(map.zoom());
             if (z !== zoom) {
                 zoom = z;
